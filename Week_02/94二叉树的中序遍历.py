@@ -1,0 +1,79 @@
+'''
+94. 二叉树的中序遍历
+给定一个二叉树，返回它的中序 遍历。
+输入: [1,null,2,3]
+   1
+    \
+     2
+    /
+   3
+输出: [1,3,2]
+
+进阶: 递归算法很简单，你可以通过迭代算法完成吗？
+
+
+解题思路：
+1.递归：递归是函数自己调用自己，操作系统自动帮我们用栈来保存了每个调用的函数，O(N)
+2.迭代：用迭代模拟递归的调用过程，O(N)
+
+dfs(root.left)
+    dfs(root.left)
+        dfs(root.left)
+            为null返回
+        打印节点
+        dfs(root.right)
+            dfs(root.left)
+                dfs(root.left)
+                ......
+递归的调用过程是不断往左边走，当左边走到头了，就打印节点，然后转向右边，然后继续我那个左边走
+'''
+
+
+class TreeNode:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
+
+
+class Solution:
+    def inoder_traversal(self, root: TreeNode):
+        res = []
+
+        def inorder(root):
+            if root:
+                inorder(root.left)
+                res.append(root.val)
+                inorder(root.right)
+        inorder(root)
+        return res
+
+    def inoder_traversal_iteratively(self, root):
+        # 迭代的方法
+        # 递归中左边走不下去了，就会返回（递归函数返回，回到上一层），对应到迭代中就是else分支
+        res, stack = [], []
+        # root 和 stack 不会同时为空，除非整个数遍历完了
+        # 比如当左边 走不下去的时候，root就变成空了，但此时栈中还有元素，说明节点还没遍历完
+        # 当根节点弹出后，栈为空了，但root不为空，说明还有节点没遍历完
+        while stack or root:
+            # 不断往左子树方向走，每走一次就将当前节点保存到栈中
+            # 这是模拟递归的调用
+            if root:
+                stack.append(root)
+                root = root.left
+            # 当前节点为空，说明左边走到头了，从栈中弹出节点并保存
+            # 打印根节点
+            # 转向右节点，继续上面的过程
+            else:
+                tmp = stack.pop()
+                res.append(tmp.val)
+                root = tmp.right
+        return res
+
+
+if __name__ == "__main__":
+    s = Solution()
+    root = TreeNode([1, None, 2, 3])
+    # 我如果这样新建一个 二叉树，返回结果 和在 LeetCode 中 不一样啊???
+    res = s.inoder_traversal(root)
+    print(res)

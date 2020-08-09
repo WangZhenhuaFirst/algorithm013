@@ -11,21 +11,66 @@
 解题思路：
 1.暴力方法，两个索引：O(n^2)
 
-2.哈希表：后面学习后再写
+2.哈希表：a + b == target 可以转化为：对于数组中每个元素a，是否是否存在元素 target - b
+要想优化时间复杂度，最好的方法就是以空间换时间，建个哈希表，让每个元素的索引与元素一一对应
 '''
 
 
 class Solution:
-    def two_sum(self, nums, target):
+    def two_sum_bad(self, nums, target):
+        '''暴力'''
         for i in range(0, len(nums)-1):
             for j in range(i+1, len(nums)):
                 if nums[i] + nums[j] == target:
                     return [i, j]
+
+    def twice_hash(self, nums, target):
+        '''
+        两遍哈希表 O(N)
+        在建立字典的第一个for循环中，如果nums中有重复的数字,
+        则for循环完成后，会保存最后一个重复的数字的索引为值。
+        在第二个循环查找j = hashmap.get(target - num)时，
+        如果nums = [3,7,8,9，3]，target =6，
+        第二个for循环先遍历到第一个3，即i=0，这里j的值是最后一个3的索引，即4
+        此时i != j因而返回[0,4]
+        即在两个for循环中已经内涵对重复数字的判断操作
+        总结成一句话就是：第一个for循环存的是最后一个重复数字的索引，
+        第二个for循环取得是第一个重复数字的索引，所以肯定不会重复
+        '''
+        dic = {}
+        for idx, num in enumerate(nums):
+            dic[num] = idx
+        for i, num in enumerate(nums):
+            j = dic.get(target - num)
+            if j is not None and i != j:
+                return [i, j]
+
+    def one_hash(self, nums, target):
+        '''一遍哈希表 O(N)'''
+        dic = {}
+        for i, n in enumerate(nums):
+            # 先判断之前加入哈希表的数值有没有满足需要的
+            m = target - n
+            if m in dic:
+                return [dic[m], i]
+            dic[n] = i  # 这句不能放在if之前，解决list中有重复值或target-num=num的情况
+
+    def one_hash_another(self, nums, target):
+        '''
+        非常巧妙，
+        dic中存的是 target - n，也就是要找的那个数值，
+        然后判断nums中是否有这些数值就可以了
+        '''
+        dic = {}
+        for i, n in enumerate(nums):
+            if n in dic:
+                return [dic[n], i]
+            dic[target - n] = i
 
 
 if __name__ == "__main__":
     s = Solution()
     nums = [2, 7, 11, 15]
     target = 9
-    result = s.two_sum(nums, target)
+    result = s.two_sum_bad(nums, target)
     print(result)
