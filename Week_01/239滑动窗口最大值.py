@@ -16,9 +16,16 @@
 
 如何想到用双端队列的？
 前面的数离开，后面的数加进来
+
+3. 堆，PriorityQueue:O(NlogN)
+
+
+
+
 '''
 
 from collections import deque
+import heapq
 
 
 class Solution:
@@ -49,6 +56,25 @@ class Solution:
             if i >= k - 1:
                 res.append(nums[window[0]])
         return res
+
+        def max_sliding_window_heap(self, nums, k):
+            n = len(nums)
+            if n * k == 0:
+                return []
+            if k == 1:
+                return nums
+            res, heap = [], []
+            for i in range(n):
+                # 因为Python是小顶堆，所以加个负号
+                heapq.heappush(heap, (-nums[i], i))
+                if i + 1 >= k:
+                    # heapq.heappop(heap) 移除的是最小值，只有在 heap[0][1] < i + 1 - k时，
+                    # 才需要移除它，因为只有这时候它才不属于本窗口，才不应该参与本窗口最值的竞选
+                    # 至于之前的窗口的非最值，是否移除无所谓，反正又不参与最值的竞选
+                    while heap and heap[0][1] < i + 1 - k:
+                        heapq.heappop(heap)
+                    res.append(-heap[0][0])
+            return res
 
 
 if __name__ == "__main__":

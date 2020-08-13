@@ -1,4 +1,6 @@
 '''
+https://leetcode-cn.com/problems/two-sum/
+
 1. 两数之和
 给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。
 你可以假设每种输入只会对应一个答案。但是，数组中同一个元素不能使用两遍。
@@ -11,7 +13,7 @@
 解题思路：
 1.暴力方法，两个索引：O(n^2)
 
-2.哈希表：a + b == target 可以转化为：对于数组中每个元素a，是否是否存在元素 target - b
+2.哈希表：a + b == target 可以转化为：对于数组中每个元素a，数组中是否是否存在元素 target - b
 要想优化时间复杂度，最好的方法就是以空间换时间，建个哈希表，让每个元素的索引与元素一一对应
 '''
 
@@ -20,7 +22,7 @@ class Solution:
     def two_sum_bad(self, nums, target):
         '''暴力'''
         for i in range(0, len(nums)-1):
-            for j in range(i+1, len(nums)):
+            for j in range(i + 1, len(nums)):
                 if nums[i] + nums[j] == target:
                     return [i, j]
 
@@ -48,12 +50,12 @@ class Solution:
     def one_hash(self, nums, target):
         '''一遍哈希表 O(N)'''
         dic = {}
-        for i, n in enumerate(nums):
+        for i, num in enumerate(nums):
             # 先判断之前加入哈希表的数值有没有满足需要的
-            m = target - n
+            m = target - num
             if m in dic:
                 return [dic[m], i]
-            dic[n] = i  # 这句不能放在if之前，解决list中有重复值或target-num=num的情况
+            dic[num] = i  # 这句不能放在if之前，解决nums中有重复值或target-num=num的情况
 
     def one_hash_another(self, nums, target):
         '''

@@ -1,4 +1,6 @@
 '''
+https://leetcode-cn.com/problems/3sum/
+
 15. 三数之和
 给你一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？
 请你找出所有满足条件且不重复的三元组。
@@ -34,23 +36,29 @@
   当s < 0,i+=1 并跳过所有重复的nums[i]
   当s > 0,j-=1 并跳过所有重复的nums[j]
   当s = 0,记录组合[k,i,j]，执行i+=1和j-=1 并跳过所有重复的nums[i]和nums[j]
+
+因为一开始就排序了，i、j 又会跳过所有重复的数值，所以就不需要去重了
 '''
 
 
 class Solution:
     def three_sum_bad(self, nums):
         '''时间复杂度太高'''
-        if not nums or len(nums) <= 2:
+        if len(nums) <= 2:
             return []
+        # 为了方便去重，先排个序
         nums.sort()
         result = []
-        for i in range(0, len(nums)-2):
-            for j in range(i+1, len(nums) - 1):
-                for k in range(j+1, len(nums)):
+        n = len(nums)
+        for i in range(n - 2):
+            for j in range(i + 1, n - 1):
+                for k in range(j + 1, n):
                     if nums[i] + nums[j] + nums[k] == 0:
                         answer = [nums[i], nums[j], nums[k]]
                         result.append(answer)
-        # 没找到好的去重方式
+        # 没找到好的去重方式 ???
+        # 先排序然后拼接字符串作为set的key是一种方法
+        # 用tuple做key
         new_result = [list(t) for t in set(tuple(_) for _ in result)]
         return new_result
 
@@ -62,7 +70,8 @@ class Solution:
                 break
             if k > 0 and nums[k] == nums[k - 1]:
                 continue
-            i, j = k + 1, len(nums) - 1
+            i = k + 1
+            j = len(nums) - 1
             while i < j:
                 s = nums[k] + nums[i] + nums[j]
                 if s < 0:
@@ -87,5 +96,6 @@ class Solution:
 if __name__ == "__main__":
     s = Solution()
     nums = [-1, 0, 1, 2, -1, -4]
-    result = s.three_sum_good(nums)
+    result = s.three_sum_bad(nums)
+    # result = s.three_sum_good(nums)
     print(result)

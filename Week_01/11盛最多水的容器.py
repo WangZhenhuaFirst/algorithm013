@@ -1,10 +1,13 @@
 '''
-给你 n 个非负整数 a1，a2，...，an，每个数代表坐标中的一个点 (i, ai) 。在坐标内画 n 条垂直线，垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。
+https://leetcode-cn.com/problems/container-with-most-water/
 
+11. 盛最多水的容器
+给你 n 个非负整数 a1，a2，...，an，每个数代表坐标中的一个点 (i, ai) 。
+在坐标内画 n 条垂直线，垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。
+找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。
 说明：你不能倾斜容器，且 n 的值至少为 2。
 
 示例：
-
 输入：[1,8,6,2,5,4,8,3,7]
 输出：49
 
@@ -24,25 +27,27 @@
 - 相同高度下，两边的距离越远越好
 - 面积受限于较短边
 
-先取长最大的，也就是最左、最右的两个边，
+先取长度最大的，也就是最左、最右的两个边，
 然后比较左右两个边的高度，短的那个则向内更新。
 高的不用更新，因为越向内，长度是越小的，如果更新高的，
 即使新的边更高，而因为面积受限于较短边，也就是还是会受限于原来的短边，则面积肯定只会更小。
-所以，只有更新短的才有可能面积更大
+所以，只有更新短的 才有可能面积更大
 '''
 
 
 class Solution:
     def max_area_bad(self, height):
         max_area = 0
-        for i in range(len(height)):
-            for j in range(i+1, len(height)):
+        n = len(height)
+        for i in range(n - 1):
+            for j in range(i + 1, n):
                 area = (j - i) * min(height[i], height[j])
                 max_area = max(max_area, area)
         return max_area
 
     def max_area_good(self, height):
         max_area = 0
+        # 这才叫双指针，两个for 循环那叫嵌套循环
         i = 0
         j = len(height) - 1
         while i < j:
