@@ -53,6 +53,20 @@ https://leetcode-cn.com/problems/subsets/solution/zi-ji-by-leetcode/
 
 class Solution:
     def subsets_recursion(self, nums):
+        '''
+        就遍历下每个位置 要么放要么不放，遍历到j就是计算下次放的位置是j的情况 
+        然后从这个位置开始继续算子问题 即i+1之后的数组的子集，
+        然后和前面的要拼起来 就是tmp 最后每种tmp都会放到res里
+
+        确实和范型递归的模板不完全很像 没有明确的出口函数吧  
+        但这类递归最大的需要理解的地方还是找到子问题，和子问题和父问题的关系 
+        然后这个其实也是可以写成模板的形式的
+
+        这题相比于模板比较特别的是 有在for循环里调用递归，确实增加了一些理解的难度 
+        但细分类型的话 有一大块题目都会在循环里调用递归 好像好几道排列组合的题都可以那样写
+
+        https://github.com/wfnuser/leetcode/blob/master/78.subset.py 刚刚用模板写了一个 不过应该不如刚刚那个写法快
+        '''
         if not nums:
             return []
         n = len(nums)

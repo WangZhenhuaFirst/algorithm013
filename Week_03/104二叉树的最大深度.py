@@ -15,4 +15,6 @@ https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/
 
 class Solution:
     def max_depth(self, root):
-        return max(self.max_depth(root.left), self.max_depth(root.right)) + 1 if root else 0
+        if not root:
+            return 0
+        return max(self.max_depth(root.left), self.max_depth(root.right)) + 1
