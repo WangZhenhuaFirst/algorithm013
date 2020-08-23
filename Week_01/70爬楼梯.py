@@ -1,5 +1,6 @@
 '''
 https://leetcode-cn.com/problems/climbing-stairs/
+（阿里巴巴、腾讯、字节跳动在半年内面试常考）
 
 70. 爬楼梯
 假设你正在爬楼梯。需要 n 阶你才能到达楼顶。
@@ -55,16 +56,20 @@ https://leetcode-cn.com/problems/climbing-stairs/
 
 可以说是从后往前想，也可以说是总——分，想不管细节，先想总体。
 或者说是自顶向下的思考方式
+
+https://leetcode-cn.com/problems/climbing-stairs/solution/70zhong-quan-chu-ji-python3hui-ji-liao-ti-jie-qu-w/
 '''
 
 
 class Solution:
     def climb_stairs(self, n):
+        '''动态规划'''
         if n <= 2:
             return n
         f1, f2, f3 = 1, 2, 3
         for i in range(3, n + 1):
             f3 = f1 + f2
+            # 以下两行的顺序不能互换
             f1 = f2
             f2 = f3
         return f3

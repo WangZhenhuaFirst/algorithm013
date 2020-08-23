@@ -1,5 +1,6 @@
 '''
 https://leetcode-cn.com/problems/two-sum/
+（近半年内，字节跳动在面试中考查此题达到 152 次）
 
 1. 两数之和
 给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。
@@ -14,7 +15,7 @@ https://leetcode-cn.com/problems/two-sum/
 1.暴力方法，两个索引：O(n^2)
 
 2.哈希表：a + b == target 可以转化为：对于数组中每个元素a，数组中是否是否存在元素 target - b
-要想优化时间复杂度，最好的方法就是以空间换时间，建个哈希表，让每个元素的索引与元素一一对应
+要想优化时间复杂度，最好的方法就是 以空间换时间，建个哈希表，让每个元素的索引与元素一一对应
 '''
 
 
@@ -27,18 +28,7 @@ class Solution:
                     return [i, j]
 
     def twice_hash(self, nums, target):
-        '''
-        两遍哈希表 O(N)
-        在建立字典的第一个for循环中，如果nums中有重复的数字,
-        则for循环完成后，会保存最后一个重复的数字的索引为值。
-        在第二个循环查找j = hashmap.get(target - num)时，
-        如果nums = [3,7,8,9，3]，target =6，
-        第二个for循环先遍历到第一个3，即i=0，这里j的值是最后一个3的索引，即4
-        此时i != j因而返回[0,4]
-        即在两个for循环中已经内涵对重复数字的判断操作
-        总结成一句话就是：第一个for循环存的是最后一个重复数字的索引，
-        第二个for循环取得是第一个重复数字的索引，所以肯定不会重复
-        '''
+
         dic = {}
         for idx, num in enumerate(nums):
             dic[num] = idx
