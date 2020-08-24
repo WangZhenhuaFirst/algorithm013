@@ -78,3 +78,44 @@ def bfs(graph, start, end):
 
 如果贪心算法能/适合解决这个问题，那么写出的代码的复杂度会很低，因为你每一步都选择最优解，也就
 删掉了那些次忧解，相当于不用遍历了；因为贪心算法不保存之前的选择，也不能回溯。复杂度当然会很低。
+
+
+## 二分查找模板
+
+```
+left = 0
+right = len(array) - 1
+while left <= right:
+    mid = (left + right)/2
+    if array[mid] == target:
+        return result
+    elif array[mid] < target:
+        left = mid + 1
+    else:
+        right = mid - 1
+```
+
+
+## 使用二分查找，寻找一个半有序数组 [4, 5, 6, 7, 0, 1, 2] 中间无序的地方
+
+
+
+```
+def find_disorder(nums):
+    left = 0
+    right = len(nums) - 1
+    while left < right:
+        mid = left + (right - left) // 2
+        # 如果左指针小于中间值，
+        if nums[left] < nums[mid]:
+            # 且中间指针右移一位 小于中间值，则这就是无序位置
+            if nums[mid] > nums[mid+1]:
+                return [mid, mid+1]
+            # 否则跟新左指针
+            left = mid + 1
+        else:
+            if nums[mid] < nums[mid-1]:
+                return [mid-1, mid]
+            right = mid - 1
+    return []
+```
