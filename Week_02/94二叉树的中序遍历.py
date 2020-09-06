@@ -2,7 +2,7 @@
 https://leetcode-cn.com/problems/binary-tree-inorder-traversal/
 
 94. 二叉树的中序遍历
-给定一个二叉树，返回它的中序 遍历。
+给定一个二叉树，返回它的中序遍历。
 输入: [1,null,2,3]
    1
     \
@@ -42,11 +42,9 @@ class TreeNode:
 class Solution:
     def inoder_traversal(self, root: TreeNode):
         '''
+        递归
         https://leetcode-cn.com/problems/binary-tree-preorder-traversal/solution/er-cha-shu-xi-lie-1er-cha-shu-de-qian-xu-bian-li-p/
         之所以要再定义一个函数，是因为题目要求返回这个树的遍历结果???
-        
-
-
         '''
         res = []
 
@@ -58,9 +56,47 @@ class Solution:
         inorder(root)
         return res
 
-    def inoder_traversal_iteratively(self, root):
-        # 迭代的方法
-        # 递归中左边走不下去了，就会返回（递归函数返回，回到上一层），对应到迭代中就是else分支
+        def inorderTraversal(self, root: TreeNode) -> List[int]:
+            '''迭代:None标记'''
+            if not root:
+                return []
+            result = []
+            stack = [root]
+            while stack:
+                node = stack.pop()
+                if node is None:
+                    node = stack.pop()
+                    result.append(node.val)
+                else:
+                    if node.right:
+                        stack.append(node.right)
+                    stack.append(node)
+                    stack.append(None)  # 中间节点访问过，但还没有处理，需要标记一下
+                    if node.left:
+                        stack.append(node.left)
+            return result
+
+        def inorderTraversal(self, root):
+            '''迭代：bool标记'''
+            if not root:
+                return []
+            stack = [(root, False)]
+            res = []
+            while stack:
+                cur, visit = stack.pop()
+                if visit:
+                    res.append(cur.val)
+                else:
+                    if cur.right:
+                        stack.append((cur.right, False))
+                    stack.append((cur, True))
+                    if cur.left:
+                        stack.append((cur.left, False))
+            return res
+
+        def inoder_traversal_iteratively(self, root):
+        '''普通迭代'''
+        # 递归中 左边走不下去了，就会返回（递归函数返回，回到上一层），对应到迭代中就是else分支
         res, stack = [], []
         # root 和 stack 不会同时为空，除非整个树遍历完了
         # 比如当左边 走不下去的时候，root就变成空了，但此时栈中还有元素，说明节点还没遍历完

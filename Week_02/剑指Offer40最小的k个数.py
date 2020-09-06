@@ -27,9 +27,8 @@ class Solution:
     def get_least_numbers_heap(self, arr, k):
         '''
         Python语言中的堆为小根堆
-        将全部数据放入小根堆，然后循环逐一取出前K个元素，O（KlogN)
-        首先将前K个数插入小根堆，然后从K+1个元素开始跟小根堆的第一个元素比较 O（NlogK)
-        
+        将全部数据放入小根堆，然后循环逐一取出前K个元素，O（KlogN)，取每个元素的时间复杂度是logN;
+        或者首先将前K个数插入小根堆，然后从K+1个元素开始跟小根堆的第一个元素比较 O（NlogK)
         '''
         if k == 0:
             return []

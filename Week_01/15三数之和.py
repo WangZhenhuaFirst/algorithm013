@@ -24,15 +24,16 @@ https://leetcode-cn.com/problems/3sum/
 解题思路：
 1.暴力求解，三重循环：O(n^3)
 
-2.两重暴力循环 + hash：O(n^2) 学完哈希再写
+2.两重暴力循环 + hash：O(n^2) 学完哈希再写？？？
 
 3.夹逼/双指针：O(N^2)，其中固定指针k循环复杂度O(N)，双指针i、j复杂度O(N)
-因为不需要下标，可以排序后夹逼(nums排序复杂度为O(NlogN))
+因为返回结果不需要下标，可以排序后夹逼(nums排序复杂度为O(NlogN))
 
 固定3个指针中最左(最小)数字的指针k，双指针i、j 分设在剩余数组两端
 1.当nums[k] > 0 时直接break跳出，因为不可能有答案了
-2.当k > 0 且 nums[k] == nums[k -1] 时即跳过nums[k]，因为已经将nums[k-1]的所有组合加入
-结果中，本次 双指针搜索只会得到重复组合(当nums[k]==nums[k-1]时，nums[k]能得到的组合肯定都在nums[k-1]中出现过了)
+2.当k > 0 且 nums[k] == nums[k-1] 时即跳过nums[k]，因为数组是排序过的，所以本次
+双指针搜索只会得到重复组合。因为当nums[k]==nums[k-1]时，nums[k]能得到的组合肯定都在nums[k-1]中出现过了。
+并且nums[k-1]能得到的组合只可能比nums[k]多，不会比它少
 3.在i < j 的情况下，计算 s = nums[k] + nums[i] + nums[j]
   当s < 0,i+=1 并跳过所有重复的nums[i]
   当s > 0,j-=1 并跳过所有重复的nums[j]
@@ -44,13 +45,13 @@ https://leetcode-cn.com/problems/3sum/
 
 class Solution:
     def three_sum_bad(self, nums):
-        '''时间复杂度太高'''
-        if len(nums) <= 2:
+        '''三重循环,时间复杂度太高'''
+        n = len(nums)
+        if n < 3:
             return []
         # 为了方便去重，先排个序
         nums.sort()
         result = []
-        n = len(nums)
         for i in range(n - 2):
             for j in range(i + 1, n - 1):
                 for k in range(j + 1, n):
@@ -58,21 +59,26 @@ class Solution:
                         answer = [nums[i], nums[j], nums[k]]
                         result.append(answer)
         # 没找到好的去重方式 ???
-        # 先排序然后拼接字符串作为set的key是一种方法
-        # 用tuple做key
+        # set的key必须是不可变的,直接set(result)会报错：TypeError: unhashable type: 'list'
+        # 将result的元素都转为tuple,用tuple做key,然后用set 去重。再将每个元素和列表转为list
+
+        # 拼接字符串作为set的key也是一种方法
         new_result = [list(t) for t in set(tuple(_) for _ in result)]
         return new_result
 
     def three_sum_good(self, nums):
+        n = len(nums)
+        if n < 3:
+            return []
         nums.sort()
         res = []
-        for k in range(len(nums) - 2):
+        for k in range(n-2):
             if nums[k] > 0:
                 break
             if k > 0 and nums[k] == nums[k - 1]:
                 continue
             i = k + 1
-            j = len(nums) - 1
+            j = n - 1
             while i < j:
                 s = nums[k] + nums[i] + nums[j]
                 if s < 0:

@@ -29,6 +29,7 @@ from typing import ListNode
 
 class Solution:
     def has_cycle_bad(self, head):
+        '''暴力'''
         s = set()
         while head:
             if head in s:
@@ -39,7 +40,7 @@ class Solution:
 
     def has_cycle_good(self, head: ListNode):
         i, j = head, head
-        # 防止访问空的next:
+        # 防止访问 null.next:
         # 如果没环，j指针会先走到头，就不用判断i是否为空；
         # 如果有环，那永远走不到头，也就不必担心为空的问题了
         while j and j.next:

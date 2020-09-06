@@ -17,6 +17,7 @@
 如何想到用双端队列的？
 前面的数离开，后面的数加进来
 
+
 3. 堆，PriorityQueue:O(NlogN)
 
 
@@ -30,22 +31,19 @@ import heapq
 
 class Solution:
     def max_sliding_window_bad(self, nums, k):
-        n = len(nums)
-        if n * k == 0:
-            return []
-        return [max(nums[i:i + k]) for i in range(n - k + 1)]
+        '''暴力'''
+        return [max(nums[i:i + k]) for i in range(len(nums) - k + 1)]
 
     def max_sliding_window_good(self, nums, k):
-        n = len(nums)
+        '''双向队列'''
         # 特例
-        if n * k == 0:
-            return []
         if k == 1:
             return nums
         res = []
+        n = len(nums)
         window = deque()
         for i in range(n):
-            # 窗口/双端队列中最多只能容纳k个数，所以当i>=k时，要先去掉多余的数
+            # 窗口/双端队列中最多只能容纳k个数，所以当i>=k时，要先去掉多余的数，或者说不属于当前窗口的数
             if i >= k and i - k == window[0]:
                 window.popleft()
             # 如果滑动窗口非空，新进来的数比队列里已经存在的数还大
@@ -58,13 +56,10 @@ class Solution:
         return res
 
         def max_sliding_window_heap(self, nums, k):
-            n = len(nums)
-            if n * k == 0:
-                return []
             if k == 1:
                 return nums
             res, heap = [], []
-            for i in range(n):
+            for i in range(len(nums)):
                 # 因为Python是小顶堆，所以加个负号
                 heapq.heappush(heap, (-nums[i], i))
                 if i + 1 >= k:
