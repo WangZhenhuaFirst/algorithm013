@@ -1,5 +1,5 @@
 '''
-242. 有效的字母异位词
+242. 有效的字母异位词 （Facebook、亚马逊、谷歌在半年内面试中考过）
 给定两个字符串 s 和 t ，编写一个函数来判断 t 是否是 s 的字母异位词。
 
 示例 1
@@ -19,11 +19,13 @@
 
 class Solution:
     def is_anagram_bad(self, s, t):
+        '''直接调用编程语言的sort方法'''
         if len(s) != len(t):
             return False
         return sorted(s) == sorted(t)
 
     def is_anagram_good(self, s, t):
+        '''哈希表,计数排序'''
         if len(s) != len(t):
             return False
         dic1, dic2 = {}, {}
