@@ -1,7 +1,7 @@
 '''
 https://leetcode-cn.com/problems/longest-common-subsequence/
 
-1143. 最长公共子序列
+1143. 最长公共子序列 （亚马逊、字节跳动、谷歌在半年内面试中考过）
 
 思路：
 1.为啥这个问题用动态规划解决？

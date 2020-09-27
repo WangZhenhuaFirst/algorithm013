@@ -1,7 +1,7 @@
 '''
 https://leetcode-cn.com/problems/decode-ways/
 
-91. 解码方法
+91. 解码方法（Facebook、亚马逊、字节跳动在半年内面试中考过）
 
 思路：
 和爬楼梯是同类问题，难点是加了许多限制条件。

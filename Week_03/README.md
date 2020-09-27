@@ -8,6 +8,9 @@
 
 ### 递归代码模板
 
+参考：https://shimo.im/docs/EICAr9lRPUIPHxsH/read
+
+
 ```
 def recursion(level, param1, param2, ...):
     # recursion terminator
@@ -25,7 +28,7 @@ def recursion(level, param1, param2, ...):
 ```
 
 ### 递归思维要点
-- 不要人肉递归，这是最大的误区：这一点还是没有做到，还是会忍不住想把递归展开，但又想不清楚？？？
+- 不要人肉递归，这是最大的误区：
 - 找到最近最简单方法，将其拆解成可重复的子问题：如果这个问题是可以通过编程、算法解决的，那肯定有重复子问题
 - 数学归纳法思维：如果看完题目懵逼了，就先考虑n=1这种最简单的情况看看
 

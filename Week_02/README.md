@@ -23,14 +23,15 @@
 class TreeNode:
     def __init__(self, val):
         self.val = val
-        self.left, self.right = None, None
+        self.left = None
+        self.right = None
 ```
 
 
-## 数的遍历
+## 树的遍历
 为什么需要遍历？如果是一颗普通的树，其中的节点是无序的，那么要查找某个元素，就只能通过遍历。
 
-数的结构导致它的遍历适合用递归来实现，用循环则比较麻烦。
+数的结构导致它的遍历 适合用递归来实现，用循环则比较麻烦。
 
 前序遍历：根-左-右
 对于树中的任意节点来说，先打印这个节点，再打印它的 左子树，最后打印它的右子树
@@ -43,7 +44,7 @@ def preorder(self, root):
 ```
 
 中序遍历：左-根-右
-对于书中的任意节点来说，先打印它的左子树，再打印它本身，最后打印它的右子树。
+对于树中的任意节点来说，先打印它的左子树，再打印它本身，最后打印它的右子树。
 ```
 def inorder(self, root):
     if root:
@@ -59,7 +60,7 @@ def postorder(self, root):
     if root:
         self.postorder(root.left)
         self.postorder(root.right)
-        self.traverse_path(root.val)
+        self.traverse_path.append(root.val)
 ```
 
 
