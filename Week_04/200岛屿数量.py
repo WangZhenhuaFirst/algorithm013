@@ -1,10 +1,9 @@
 '''
 https://leetcode-cn.com/problems/number-of-islands/
 
-200. 岛屿数量
+200. 岛屿数量（近半年内，亚马逊在面试中考查此题达到 350 次）
 
-思路：
-网格类问题，网格结构遍历比二叉树复杂。
+思路：网格类问题，网格结构遍历 比二叉树复杂。
 
 DFS模板：
 ```
@@ -18,7 +17,7 @@ def traverse(root):
 网格的dfs，完全可以参考二叉树的dfs。
 首先，每个格子有多少相邻节点？上下左右4个，也可以说网格是四叉的
 其次，网格中的base case是什么？或者说不需要再继续遍历的条件是什么？越界。这和二叉树的root == null 一回事
-网格与二叉树DFS最大的不同是，可能会重复遍历，因为网格本质上是个图：可以把每个格子看成图中的点，每个节点有上下左右四条边。
+网格与二叉树DFS最大的不同是，可能会重复遍历，因为 网格本质上是个图：可以把每个格子看成图中的点，每个节点有上下左右四条边。
 
 
 从一个点扩散开，找到与其连通的点，其实就是从一个点开始，进行一次深度或广度优先遍历。
@@ -31,7 +30,7 @@ class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
         '''DFS'''
         def dfs(grid, i, j, m, n, marked):
-            marked[i][j] = True
+            marked[i][j] = True  # 因为每个1都要被标记为TRUE，所以这句放在这里
             for direction in directions:
                 new_i = i + direction[0]
                 new_j = j + direction[1]
@@ -50,12 +49,12 @@ class Solution:
             for j in range(n):
                 # 没有访问过，且是陆地，就用dfs遍历与之相邻的陆地
                 if not marked[i][j] and grid[i][j] == '1':
-                    count += 1
+                    count += 1  # 同一片陆地，只做一次计数
                     dfs(grid, i, j, m, n, marked)
         return count
 
     def numIslands(self, grid: List[List[str]]) -> int:
-        '''BFS'''2
+        '''BFS'''
         directions = [(-1, 0), (0, -1), (1, 0), (0, 1)]
         m = len(grid)
         if m == 0:

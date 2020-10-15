@@ -1,7 +1,7 @@
 '''
 https://leetcode-cn.com/problems/word-search-ii/
 
-212. 单词搜索 II
+212. 单词搜索II （亚马逊、微软、苹果在半年内面试中考过）
 
 思路：
 1. 遍历words --> board search O(N*M*M*4^k),N为words中的单词数，M为board的长、宽，k为单词的长度
@@ -16,6 +16,7 @@ board， DFS
 中的单词，就将其存到结果中。
 
 
+
 '''
 
 
@@ -23,7 +24,7 @@ def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
     # 构造字典树
     trie = {}
     for word in words:
-        node = trie
+        node = trie  # 这行放在这里，每个新的单词都从树的开头开始
         for char in word:
             node = node.setdefault(char, {})
         node['#'] = True

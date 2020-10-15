@@ -1,13 +1,13 @@
 '''
 https://leetcode-cn.com/problems/coin-change/
 
-322. 零钱兑换
+322. 零钱兑换（亚马逊在半年内面试中常考）
 
 思考：
 动态规划问题最困难的就是写出暴力解，即状态转移方程。只要写出暴力解，优化方法无非是用备忘录或DP table。
 
 计算机解决问题其实没有任何奇技淫巧，它唯一的办法就是穷举出所有可能性。
-算法设计无非是先思考如何穷举，然后再追求如何聪明地穷举。
+算法设计无非是 先思考如何穷举，然后再追求如何聪明地穷举。
 
 列出状态转移方程，就是在解决如何穷举的问题。之所以说它难，一是因为很多穷举需要递归实现，二是因为有的问题
 本身的解空间复杂，不那么容易穷举完整。
@@ -25,7 +25,8 @@ coins = [1, 2, 5], amount = 11
 dp[11] = min(dp[10] + 1, dp[9] + 1, dp[6] + 1)
 dp[amount] = min(1 + dp[amount - coin[i]]) for i in [0, len - 1] if coin[i] <= amount
 
-这个问题其实和爬楼梯问题、斐波那契数列问题类似，f(n) = f(n-1) + f(n-2)
+这个问题其实和爬楼梯问题、斐波那契数列问题类似，每次走1步、2步、5步 ？
+f(n) = f(n-1) + f(n-2)
 f(n) = min(f(n - k) for k in [1, 2, 5]) + 1
 
 
@@ -35,16 +36,17 @@ f(n) = min(f(n - k) for k in [1, 2, 5]) + 1
 
 def coinChange(coins: List[int], amount: int) -> int:
     '''暴力递归'''
-    def dp(n):
-        if n == 0:
+    def dp(amount):
+        # 递归终止条件
+        if amount == 0:
             return 0
-        if n < 0:
+        if amount < 0:
             return -1
 
         res = float('inf')
         for coin in coins:
-            subproblem = dp(n - coin)
-            if subproblem == -1:
+            subproblem = dp(amount - coin)
+            if subproblem == -1:  # 即 amount - coin < 0 时
                 continue
             res = min(res, 1 + subproblem)
         return res if res != float('inf') else -1
@@ -53,25 +55,25 @@ def coinChange(coins: List[int], amount: int) -> int:
 
 def coinChange(coins: List[int], amount: int) -> int:
     '''带备忘录的递归'''
-    memo = dict()
-
-    def dp(n):
+    def dp(amount):
         # 先查备忘录，防止重复计算
-        if n in memo:
-            return memo[n]
-        if n == 0:
+        if amount in memo:
+            return memo[amount]
+        if amount == 0:
             return 0
-        if n < 0:
+        if amount < 0:
             return -1
         res = float('inf')
         for coin in coins:
-            subproblem = dp(n - coin)
+            subproblem = dp(amount - coin)
             if subproblem == -1:
                 continue
             res = min(res, 1 + subproblem)
 
-        memo[n] = res if res != float('inf') else -1
-        return memo[n]
+        # 每一层递归都要先将结果存到memo中，再return
+        memo[amount] = res if res != float('inf') else -1
+        return memo[amount]
+    memo = dict()
     return dp(amount)
 
 
@@ -82,18 +84,10 @@ def coinChange(coins: List[int], amount: int) -> int:
     # 之所以要从1开始循环i，是因为要先求出小的amount需要的最少硬币数
     # 才能求出大的amount需要的最少硬币数
     for i in range(1, amount+1):
-        for coin in coins:
+        for coin in coins:  # 每一步都遍历各个硬币种类
             if coin <= i:  # 如果coin > i，直接 continue
                 dp[i] = min(dp[i], dp[i - coin] + 1)
     if dp[amount] > amount:
         return -1
     else:
         return dp[amount]
-
-    # for coin in coins:
-    #     for x in range(coin, amount+1):
-    #         dp[x] = min(dp[x], dp[x-coin] + 1)
-    # if dp[amount] != float('inf'):
-    #     return dp[amount]
-    # else:
-    #     return -1

@@ -8,12 +8,21 @@ https://leetcode-cn.com/problems/number-of-1-bits/
 
 
 
+
+
+
+
+
+
+
+
+
 '''
 
 
 def hammingWeight(self, n: int) -> int:
     '''手动循环'''
-    n = bin(n)
+    n = bin(n)  # 返回的n是个字符串
     count = 0
     for c in n:
         if c == '1':
@@ -42,7 +51,7 @@ def hammingWeight(self, n: int) -> int:
         # 因为1的二进制 就是 0001
         # 他与任何二进制数进行与运算，得到的就是这个数的最低位
         count += n & 1
-        n >>= 1  # 将n右移一位
+        n >>= 1  # 将n右移一位,也就是扔掉n的最低位数字
     return count
 
 
@@ -50,5 +59,7 @@ def hammingWeight(self, n: int) -> int:
     count = 0
     while n:
         count += 1
-        n = n & (n-1)  # 清零 最低位的1，所以本方法只需循环 1的个数次
+        # n 和 n-1 唯一的不同就是最低位的1，
+        # 所以这会清零 最低位的 1，所以本方法只需循环 1的个数次
+        n = n & (n-1)
     return count

@@ -1,7 +1,7 @@
 '''
 https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array/
 
-153. 寻找旋转排序数组中的最小值
+153. 寻找旋转排序数组中的最小值（亚马逊、微软、字节跳动在半年内面试中考过）
 
 https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array/solution/tong-guo-hua-tu-geng-neng-shen-ke-li-jie-er-fen-fa/
 此题画图最好理解：
@@ -25,8 +25,8 @@ class Solution:
         right = len(nums) - 1
         while left < right:
             mid = left + (right - left) // 2
-            if nums[mid] > nums[right]:
+            if nums[mid] > nums[right]:  # 说明旋转的点在 mid 右边
                 left = mid + 1
             else:
-                right = mid
+                right = mid  # 最小值有可能就是mid本身，所以这里不减一
         return nums[left]

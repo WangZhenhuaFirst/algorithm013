@@ -1,7 +1,7 @@
 '''
 https://leetcode-cn.com/problems/triangle/description/
 
-120. 三角形最小路径和
+120. 三角形最小路径和（亚马逊、苹果、字节跳动在半年内面试考过）
 
 思路：
 相邻节点：与(i,j)相邻的节点为(i+1,j)和(i+1,j+1)
@@ -21,7 +21,7 @@ f(i,j) = min(f(i+1,j), f(i+1,j+1)) + triangle[i][j]
 
 
 
-
+1https://leetcode.com/problems/triangle/discuss/38735/Python-easy-to-understand-solutions-(top-down-bottom-up)
 '''
 
 

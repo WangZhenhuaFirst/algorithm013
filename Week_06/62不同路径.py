@@ -1,7 +1,7 @@
 '''
 https://leetcode-cn.com/problems/unique-paths/
 
-62. 不同路径
+62. 不同路径 （Facebook、亚马逊、微软在半年内面试中考过）
 
 思路：
 1.排列组合:
@@ -17,7 +17,6 @@ C(n,m) = n!/(m!*(n-m)!)
 
 
 
-
 '''
 
 
@@ -28,8 +27,9 @@ class Solution:
 
     def uniquePaths(self, m: int, n: int) -> int:
         '''动态规划'''
+        # 第一行和第一列，因为都是边界，只有1中走法，所以都是1
         # 生成一个第一行、第一列都是 1 的二维数组
-        dp = [[1] * n] + [[1]+[0] * (n-1) for _ in range(m-1)]
+        dp = [[1] * n] + [[1]+[0] * (n-1) for _ in range(m-1)]  # 注意，是m-1而不是m
         for i in range(1, m):
             for j in range(1, n):
                 dp[i][j] = dp[i-1][j] + dp[i][j-1]
@@ -39,7 +39,7 @@ class Solution:
         '''
         优化空间复杂度O(2N)
         由于dp[i][j] = dp[i-1][j] + dp[i][j-1]，
-        因此只需要保留当前行与上一行的数据 (在动态方程中，即pre[j] = dp[i-1][j])
+        因此只需要保留当前行与上一行的数据
         '''
         pre = [1] * n
         cur = [1] * n

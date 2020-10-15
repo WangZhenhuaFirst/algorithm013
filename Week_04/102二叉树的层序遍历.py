@@ -1,13 +1,11 @@
 '''
 https://leetcode-cn.com/problems/binary-tree-level-order-traversal/%23/description/
 
-102. 二叉树的层序遍历
-给你一个二叉树，请你返回其按 层序遍历 得到的节点值。 （即逐层地，从左到右访问所有节点）。
+102. 二叉树的层序遍历 （字节跳动、亚马逊、微软在半年内面试中考过）
 
 https://leetcode-cn.com/problems/binary-tree-level-order-traversal/solution/bfs-de-shi-yong-chang-jing-zong-jie-ceng-xu-bian-l/
 思路：
-1.BFS：层序遍历要求的输出结果和BFS是不同的，怎么给BFS遍历的结果分层呢？在每一层遍历开始前，先记录
-队列中的节点数量n，然后一口气处理完这一层的n个节点
+1.BFS：怎么给BFS遍历的结果分层呢？在每一层遍历开始前，先记录队列中的节点数量n，然后一口气处理完这一层的n个节点
 
 
 
@@ -35,7 +33,7 @@ class Solution:
             size = len(queue)
             tmp = []
             for _ in range(size):
-                cur = queue.pop(0)
+                cur = queue.pop(0)  # 题目要求从左到右
                 tmp.append(cur.val)
                 # 如果节点的左右子树不为空，也放入队列中
                 if cur.left:

@@ -1,14 +1,9 @@
 '''
 https://leetcode-cn.com/problems/minimum-genetic-mutation/#/description
 
-433. 最小基因变化
+433. 最小基因变化（谷歌、Twitter、腾讯在半年内面试中考过）
 
-
-用广度优先搜索解决状态图搜索问题。
-
-
-
-
+思路：用广度优先搜索解决 状态图搜索问题。
 
 
 
@@ -28,14 +23,14 @@ https://leetcode-cn.com/problems/minimum-genetic-mutation/#/description
 class Solution:
     def minMutation(self, start: str, end: str, bank: List[str]) -> int:
         '''广度优先搜索：从左到右，或者说从开始到最后，对于每个碱基，探索其所有变化的可能性'''
-        bank = set(bank)  # 转为set，in判断只需O(1)时间
+        bank = set(bank)  # 转为set，in判断只需 O(1)时间
         if end not in bank:  # 目标不在bank中，直接返回-1
             return -1
         q = [(start, 0)]  # 初始节点以及当前步数
         change = {'A': 'TCG', 'T': 'ACG',
                   'C': 'ATG', 'G': 'ATC'}  # 每个碱基及对应的可变换碱基
         while q:
-            node, step = q.pop(0)
+            node, step = q.pop(0)  # 注意，用pop(0)
             if node == end:
                 return step
             for i, v in enumerate(node):

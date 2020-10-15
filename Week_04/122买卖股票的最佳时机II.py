@@ -4,7 +4,6 @@ https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/description/
 122. 买卖股票的最佳时机II （亚马逊、字节跳动、微软在半年内面试中考过）
 k 为正无穷
 
-
 思路：
 1.只要后一天比前一天上涨，就买入、卖出
 
@@ -28,8 +27,12 @@ dp[i][1] = max(dp[i-1][1], dp[i-1][0] - prices[i])
 
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
+        '''贪心算法'''
+        n = len(prices)
+        if n < 2:
+            return 0
         profit = 0
-        for i in range(1, len(prices)):
+        for i in range(1, n):
             tmp = prices[i] - prices[i - 1]
             if tmp > 0:
                 profit += tmp
@@ -40,7 +43,7 @@ class Solution:
         n = len(prices)
         if n < 2:
             return 0
-        dp = [[0] * 2 for _ in range(n+1)]
+        dp = [[0] * 2 for _ in range(n)]
         dp[0][0] = 0
         dp[0][1] = -prices[0]
         for i in range(1, n):
@@ -51,9 +54,6 @@ class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         '''
         空间复杂度O(1)
-        
-        贪心策略:可能的情况下，在每个局部最小值买入股票，然后在之后遇到的第一个局部最大值卖出。
-        这等价于找到股票价格数组中的递增子数组，对于每个递增子数组，在开始位置买入并在结束位置卖出
         '''
         n = len(prices)
         if n < 2:
@@ -61,7 +61,6 @@ class Solution:
         profit0 = 0
         profit1 = -prices[0]
         for i in range(1, n):
-            tmp = profit0
             profit0 = max(profit0, profit1 + prices[i])
-            profit1 = max(profit1, tmp - prices[i])
+            profit1 = max(profit1, profit0 - prices[i])
         return profit0

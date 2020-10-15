@@ -17,22 +17,19 @@ else:
     以上两者中的最大值
 
 
-
-
-
-
 '''
 
 
 def longestCommonSubsequence(text1, text2):
     '''
-    递归解法，比较容易理解。
+    递归解法，自顶向下，比较容易理解。
     其实就是暴力解法
     '''
     def dp(i, j):
-        # 空串，base case
+        # 递归终止条件
         if i == -1 or j == -1:
             return 0
+
         if text1[i] == text2[j]:
             # 找到一个lcs中的元素，继续往前找
             return dp(i-1, j-1) + 1
@@ -45,7 +42,7 @@ def longestCommonSubsequence(text1, text2):
 def longestCommonSubsequence(text1, text2):
     '''
     用DP优化时间复杂度
-    对于两个字符串的动态规划问题，一般都要想本文一样定义DP table，因为这样容易写出状态转义方程
+    对于两个字符串的动态规划问题，一般都要像本文一样定义DP table，因为这样容易写出状态转义方程
     '''
     if not text1 or not text2:
         return 0

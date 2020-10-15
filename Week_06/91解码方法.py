@@ -21,13 +21,7 @@ https://leetcode-cn.com/problems/decode-ways/
 动态规划自底向上，可以省略压栈的过程。
 dp[i] 表示以s[i]开头到结尾的解码方法数
 如果s[i] 和s[i+1] 组成的数字<=26，则 dp[i] = dp[i+1] + dp[i+2]
-
-
-
-
-
-
-
+其中,dp[i+1]表示淡定解码s[i];dp[i+2]表示将s[i]和s[i+1]放在一起解码
 '''
 
 
@@ -63,7 +57,8 @@ def numDecodings(s: str) -> int:
     '''动态规划'''
     n = len(s)
     dp = [0] * (n + 1)
-    dp[n] = 1  # ？？？为什么这里也要是1
+    dp[n] = 1  # 这里的 1，是为了给dp[n-2]用
+
     # s的最后一个数字如果不是0，那么以它开头的字符串有一种解码方式
     if s[n-1] != '0':
         dp[n-1] = 1
@@ -74,11 +69,11 @@ def numDecodings(s: str) -> int:
         # 如果当前数字是0，直接跳过。因为 0 不代表任何字母
         if s[i] == '0':
             continue
-        ans1 = dp[i+1]
-        ans2 = 0
+        path1 = dp[i+1]
+        path2 = 0
         if int(s[i:i+2]) <= 26:
-            ans2 = dp[i+2]
-        dp[i] = ans1 + ans2
+            path2 = dp[i+2]
+        dp[i] = path1 + path2
     return dp[0]
 
 

@@ -1,7 +1,7 @@
 '''
 https://leetcode-cn.com/problems/maximum-product-subarray/description/
 
-152.乘积最大子数组
+152.乘积最大子数组（亚马逊、字节跳动、谷歌在半年内面试中考过）
 
 思路：O(N)
 令imax为当前最大值，则 imax = max(imax * nums[i], nums[i])
@@ -31,5 +31,5 @@ def maxProduct(nums: List[int]) -> int:
             imax, imin = imin, imax
         imax = max(imax * nums[i], nums[i])
         imin = min(imin * nums[i], nums[i])
-        max_value = max(max_value, imax)  # max_value存的是各种可能的最大值中 最大的那个
+        max_value = max(max_value, imax)  # max_value存的是所有可能的最大值中 最大的那个
     return max_value

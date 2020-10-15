@@ -1,7 +1,7 @@
 '''
 https://leetcode-cn.com/problems/minimum-path-sum/
 
-64. 最小路径和
+64. 最小路径和（亚马逊、高盛集团、谷歌在半年内面试中考过）
 
 思路：
 1.状态定义：设dp为大小m * n 矩阵，其中dp[i][j]的值代表走到(i,j)的最小路径和。
@@ -13,6 +13,7 @@ grid[i][j] = min(grid[i-1][j], grid[i][j-1]) + grid[i][j]
 
 时间复杂度O(M*N):遍历整个grid矩阵元素
 空间复杂度O(1)
+
 
 
 

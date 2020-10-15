@@ -1,8 +1,9 @@
 '''
 https://leetcode-cn.com/problems/search-in-rotated-sorted-array/
 
-33. 搜索旋转排序数组
+33. 搜索旋转排序数组（Facebook、字节跳动、亚马逊在半年内面试常考）
 
+思路：
 1.暴力遍历，直接找目标元素：O(N)
 
 2.找到乱序的地方，还原排序 O(N)/O(logN) ————二分查找 ???
@@ -11,8 +12,8 @@ https://leetcode-cn.com/problems/search-in-rotated-sorted-array/
 边界
 index
 
-将待搜索区间一分为二，mid 一定会落在其中一个有序区间里。
-还可以这样理解：中间元素mid 把待搜索区间分成了两部分，两部分中至少有一部分是有序的。
+中间元素mid 把待搜索区间分成了两部分，两部分中至少有一部分是有序的。
+
 
 
 
@@ -33,13 +34,14 @@ class Solution:
             # Since when there's only two elements, the mid and low points to
             # exactly the same element. Then you have to include = to make sure
             # it covers this situation
+            # 也就是整个数组nums只有两个元素时，left 其实等于mid
             if nums[left] <= nums[mid]:  # 说明左半边是有序的
                 # 因为此时左半边是有序的，所以左半边的if条件好写
                 if nums[left] <= target < nums[mid]:
                     right = mid - 1
                 else:
                     left = mid + 1
-            else:
+            else:  # 说明右半边是有序的
                 if nums[mid] < target <= nums[right]:
                     left = mid + 1
                 else:

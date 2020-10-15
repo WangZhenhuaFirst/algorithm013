@@ -1,19 +1,28 @@
 '''
 https://leetcode-cn.com/problems/sqrtx/
 
-69. x 的平方根
+69. x 的平方根（字节跳动、微软、亚马逊在半年内面试中考过）
 
 思路：
 1.二分查找： y = x^2 , x > 0的部分 是单调递增的，且有上下界(0,y)
 
 
 2.牛顿迭代法：
+
+
+
+
+
+
+
+
+
 '''
 
 
 class Solution:
     def mySqrt(self, x: int) -> int:
-        '''二分查找'''
+        '''二分查找,这种写法不好确定应该返回left/right,只能试一下'''
         if x == 0 or x == 1:
             return x
         left = 1
@@ -36,7 +45,7 @@ class Solution:
             mid = left + (right - left) // 2
             if mid * mid <= x < (mid+1)*(mid+1):
                 return mid
-            elif x < mid * mid:
+            elif mid * mid > x:
                 right = mid - 1
             else:
                 left = mid + 1

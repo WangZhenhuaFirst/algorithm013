@@ -29,13 +29,13 @@ class Solution:
         empty = []  # 收集需填数位置
         for i in range(9):
             for j in range(9):
-                if board[i][j] != '.':  # 更新可用数字
+                if board[i][j] == '.':  
+                    empty.append((i, j))
+                else: # 更新可用数字
                     val = int(board[i][j])
                     row[i].remove(val)
                     col[j].remove(val)
                     block[(i // 3) * 3 + j // 3].remove(val)
-                else:
-                    empty.append((i, j))
 
         def backtrack(iter=0):
             if iter == len(empty):

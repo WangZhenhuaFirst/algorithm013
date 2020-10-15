@@ -5,8 +5,13 @@ https://leetcode-cn.com/problems/binary-tree-level-order-traversal/solution/bfs-
 如果使用 DFS/BFS 只是为了遍历一棵树、一张图上的所有结点的话，那么 DFS 和 BFS 的能力没什么差别，我们当然更倾向于更方便写、空间复杂度更低的 DFS 遍历。DFS遍历的代码比BFS简洁太多了，这是因为递归的方式隐含地使用了系统的 栈，我们不需要自己维护一个数据结构。
 不过，某些使用场景是 DFS 做不到的，只能使用 BFS 遍历。这就是两个场景：「层序遍历」、「最短路径」。
 
+广度优先遍历，需要程序员自己编写节点类，显式使用队列这个数据结构。
+深度优先遍历，可以直接使用系统栈，在递归方法执行完成时，系统栈顶就把我们所需要的状态信息直接弹出，
+而无需编写节点类和显示使用栈。
 
 ## DFS 深度优先
+
+https://shimo.im/docs/UdY2UUKtliYXmk8t/read
 
 ``` 
 # 二叉树递归写法
@@ -26,7 +31,8 @@ def dfs(node):
 visited = set()
 
 def dfs(node, visited):
-    # terminator
+    # terminator,这部分不写其实也能达到同样的效果
+    # 因为下面的for循环中，如果node在visited中，就不会再递归下去了
     if node in visited:
         return
 
@@ -58,6 +64,8 @@ def dfs(self, tree):
 
 ## BFS 广度优先
 
+https://shimo.im/docs/ZBghMEZWix0Lc2jQ/read
+
 ```
 def bfs(graph, start, end):
     queue = []
@@ -82,6 +90,8 @@ def bfs(graph, start, end):
 
 ## 二分查找模板
 
+https://shimo.im/docs/xvIIfeEzWYEUdBPD/read
+
 ```
 left = 0
 right = len(array) - 1
@@ -98,20 +108,18 @@ while left <= right:
 
 ## 使用二分查找，寻找一个半有序数组 [4, 5, 6, 7, 0, 1, 2] 中间无序的地方
 
-
-
 ```
 def find_disorder(nums):
     left = 0
     right = len(nums) - 1
-    while left < right:
+    while left < right: # 这里不能加等号，防止后面的nums[mid+1]越界
         mid = left + (right - left) // 2
-        # 如果左指针小于中间值，
+        # 如果左指针小于中间值，说明左边是有序的
         if nums[left] < nums[mid]:
             # 且中间指针右移一位 小于中间值，则这就是无序位置
             if nums[mid] > nums[mid+1]:
                 return [mid, mid+1]
-            # 否则跟新左指针
+            # 否则更新左指针
             left = mid + 1
         else:
             if nums[mid] < nums[mid-1]:

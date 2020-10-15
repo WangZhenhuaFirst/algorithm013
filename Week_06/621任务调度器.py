@@ -1,9 +1,9 @@
 '''
 https://leetcode-cn.com/problems/task-scheduler/
 
-621. 任务调度器
+621. 任务调度器（Facebook 在半年内面试中常考）
 
-思路：完成所有任务的最短时间取决于出现次数最多的任务数量
+思路：完成所有任务的最短时间 取决于出现次数最多的任务数量
 
 tasks = ["A","A","A","B","B","B"], n = 2
 先把出现次数最多的任务A安排上
@@ -23,8 +23,6 @@ A->B ->()->A->B ->()->A->B
 tasks = ["A","A","A","B","B","B","C","C","D","D"], n = 2
 A -> B -> C -> A -> B -> D -> A -> B -> C -> D
 此时如果按照上述方法计算将得到结果为8，比数组总长度10要小，应返回数组长度。
-
-
 '''
 
 
@@ -39,6 +37,7 @@ def leastInterval(self, tasks: List[str], n: int) -> int:
     task_sort = sorted(task_map.items(), key=lambda x: x[1], reverse=True)
 
     max_task_count = task_sort[0][1]
+    # 中间留的空闲的个数 * 每个空闲里需要填入的 任务数+待命数
     res = (max_task_count - 1) * (n + 1)
 
     for sort in task_sort:

@@ -5,12 +5,14 @@ https://leetcode-cn.com/problems/surrounded-regions/
 
 思路：拿到基本就可以确定是图的DFS、BFS遍历的题目了。
 边界上的O及与其联通的O要特殊处理，剩下的O替换成X即可。问题转化为，如何寻找和边界联通的O。
-寻找特殊的O时，不替换为X，而是先标记为 #，寻找完成后。重新遍历一遍，把# 恢复为O，O替换为X
+寻找特殊的O时，不替换为X，而是先标记为 #，寻找完成后。重新遍历一遍，把 # 恢复为O，O替换为X
 
 如何寻找和边界联通的O ？ 从边界出发，对图进行 DFS 和 BFS
 
 1.DFS
 2.BFS
+DFS和BFS的区别是，DFS是一条道走到黑，直到无路可走，再走下一条路；BFS是一层层地走，走完一层再走下一层
+
 3.并查集
 
 
@@ -22,18 +24,19 @@ https://leetcode-cn.com/problems/surrounded-regions/
 
 def solve(self, board: List[List[str]]) -> None:
     '''DFS'''
-    # not board就是None，not board[0]就是[],not board[0] 是为了避免输入是[[]]
+    # not board就是防止 None 或 []
+    # board[0]取到的是第一行，not board[0] 是为了避免输入是[[]]
     if not board or not board[0]:
         return
     row = len(board)
     col = len(board[0])
 
     def dfs(i, j):
-        board[i][j] = 'B'
+        board[i][j] = '#'
         for x, y in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
             next_i = i + x
             next_j = j + y
-            if 1 <= next_i < row - 1 and 1 <= next_j < col - 1 and board[next_i][next_j] == 'O':
+            if 0 < next_i < row - 1 and 0 < next_j < col - 1 and board[next_i][next_j] == 'O':
                 dfs(next_i, next_j)
 
     for j in range(col):
@@ -51,7 +54,7 @@ def solve(self, board: List[List[str]]) -> None:
         for j in range(col):
             if board[i][j] == 'O':
                 board[i][j] = 'X'
-            if board[i][j] == 'B':
+            if board[i][j] == '#':
                 board[i][j] = 'O'
 
 
@@ -68,7 +71,7 @@ def solve(self, board: List[List[str]]) -> None:
         while queue:
             i, j = queue.pop()
             if 0 <= i < row and 0 <= j < col and board[i][j] == 'O':
-                board[i][j] = 'B'
+                board[i][j] = '#'
                 for x, y in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
                     queue.append((i+x, j + y))
 
@@ -88,5 +91,18 @@ def solve(self, board: List[List[str]]) -> None:
         for j in range(col):
             if board[i][j] == 'O':
                 board[i][j] = 'X'
-            if board[i][j] == 'B':
+            if board[i][j] == '#':
                 board[i][j] = 'O'
+
+
+def solve(self, board: List[List[str]]) -> None:
+    '''并查集'''
+
+    if not board or not board[0]:
+        return
+    row = len(board)
+    col = len(board[0])
+    for i in range(row):
+        for j in range(col):
+            if board[i][j] == 'O':
+                           

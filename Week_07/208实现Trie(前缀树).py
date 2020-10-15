@@ -1,7 +1,7 @@
 '''
 https://leetcode-cn.com/problems/implement-trie-prefix-tree/
 
-208. 实现 Trie (前缀树) （亚马逊、微软、谷歌在半年内面试中考过）
+208. 实现Trie (前缀树) （亚马逊、微软、谷歌在半年内面试中考过）
 
 思路：
 参考：https://shimo.im/docs/DP53Y6rOwN8MTCQH/read
@@ -33,6 +33,7 @@ class Trie:
         node = self.root
         # 每个字符是一个节点
         for char in word:
+            # setdefault，如果键不存在于字典中，会添加键并将值设为默认值
             node = node.setdefault(char, {})  # 字典迭代，node 是更深一层的字典
         node[self.end_of_word] = self.end_of_word  # 单词结束标志
 

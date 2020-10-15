@@ -1,11 +1,19 @@
 '''
 https://leetcode-cn.com/problems/house-robber-ii/description/
 
-213. 打家劫舍 II
+213. 打家劫舍II（字节跳动在半年内面试中考过）
 
 思路：第一个和最后一个房子中 只能偷一个，因此可以转化为两个单排排列的子问题：
 不偷第一个 nums[1:]
 不偷最后一个 nums[:n-1]
+
+
+
+
+
+
+
+
 
 
 

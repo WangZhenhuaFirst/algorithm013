@@ -1,9 +1,10 @@
 '''
 https://leetcode-cn.com/problems/assign-cookies/description/
 
-455. 分发饼干
+455. 分发饼干（亚马逊在半年内面试中考过）
 
-思路：优先满足胃口小的小朋友的需求
+思路：贪心算法，优先满足胃口小的小朋友的需求
+
 
 
 
@@ -21,6 +22,7 @@ https://leetcode-cn.com/problems/assign-cookies/description/
 
 class Solution:
     def findContentChildren(self, g: List[int], s: List[int]) -> int:
+        '''O(N)'''
         if not g or not s:
             return 0
         # 升序排序
